@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:sec="http://www.springframework.org/schema/security" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd">
+    
+    <sec:global-method-security pre-post-annotations="enabled" />
+    
+    <sec:http use-expressions="true" authentication-manager-ref="authenticationManager" 
+    		auto-config="true">
+    	<sec:intercept-url pattern="/admin/**" 
+    		access="hasAnyRole('ROLE_SUPERADMIN')" requires-channel="any" />
+    	<sec:form-login login-page="${admin.login.page.url}"
+    		username-parameter="j_username" password-parameter="j_password" 
+    		authentication-success-handler-ref="adminAuthenticationHandler" 
+    		authentication-failure-handler-ref="adminAuthenticationHandler" 
+    		authentication-failure-forward-url="${admin.login.failure.url}" 
+    		login-processing-url="${admin.login.processing.url}" 
+    		authentication-failure-url="${admin.login.failure.url}" />
+    	<sec:csrf/>
+    	<sec:access-denied-handler ref="accessDeniedHandler"/>
+    	<sec:logout logout-url="${admin.logout.url}" delete-cookies="JSESSIONID"
+    			logout-success-url="${admin.login.page.url}" invalidate-session="true"  />
+    	<sec:session-management invalid-session-url="${admin.login.page.url}" 
+    			session-authentication-error-url="${admin.login.failure.url}" >
+    		<sec:concurrency-control error-if-maximum-exceeded="false" expired-url="${admin.login.page.url}"/>
+    	</sec:session-management>
+    </sec:http>
+    
+    <bean id="adminAuthenticationHandler" 
+    	class="com.mipa.admin.web.authentication.AdminAuthenticationHandler" />
+    
+    <sec:authentication-manager id="authenticationManager">
+    	<sec:authentication-provider ref="authenticationProvider" />
+    </sec:authentication-manager>
+
+    <bean id="authenticationProvider" 
+    		class="com.mipa.admin.web.authentication.AdminAuthenticationProvider"></bean>
+    
+    <bean id="accessDeniedHandler" class="com.mipa.admin.web.authentication.AdminAccessDeniedHandler" ></bean>
+    
+</beans>

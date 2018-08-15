@@ -1,0 +1,1 @@
+<h2>Welcome to MIPA Admin Panel</h2>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="homepage" extends="mainLayout">
+		<put-attribute name="title" value="Admin" />
+		<put-attribute name="content" value="/WEB-INF/views/admin/home.jsp" />
+	</definition>
+	
+	<definition name="store-list" extends="mainLayout">
+		<put-attribute name="title" value="Store/Market List" />
+		<put-attribute name="content" value="/WEB-INF/views/admin/storepages/store-list.jsp" />
+	</definition>
+	
+	<definition name="store-form" extends="mainLayout">
+		<put-attribute name="title" value="Create Update Store/Market" />
+		<put-attribute name="content" value="/WEB-INF/views/admin/storepages/store-form.jsp" />
+	</definition>
+	
+	<definition name="store-view" extends="mainLayout">
+		<put-attribute name="title" value="View Store/Market detail" />
+		<put-attribute name="content" value="/WEB-INF/views/admin/storepages/store-view.jsp" />
+	</definition>
+		
+	<definition name="object-not-found" extends="mainLayout">
+		<put-attribute name="title" value="View Store/Market detail" />
+		<put-attribute name="content" value="/WEB-INF/views/admin/object-not-found.jsp" />
+	</definition>
+	
+	<definition name="product-list" extends="mainLayout">
+		<put-attribute name="title" value="Product List" />
+		<put-attribute name="content" value="/WEB-INF/views/admin/productpages/product-list.jsp" />
+	</definition>
+	
+	<definition name="product-form" extends="mainLayout">
+		<put-attribute name="title" value="Create/Update Product" />
+		<put-attribute name="content" value="/WEB-INF/views/admin/productpages/product-form.jsp" />
+	</definition>
+	
+	<definition name="product-view" extends="mainLayout">
+		<put-attribute name="title" value="View Product Detail" />
+		<put-attribute name="content" value="/WEB-INF/views/admin/productpages/product-view.jsp" />
+	</definition>
+	
+</tiles-definitions>

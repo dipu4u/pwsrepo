@@ -6,8 +6,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <h3>Store Management</h3>
-<c:if test="${messageTag ne null}">
-	<p class="errormsg"><spring:message code="${messageTag}" /></p>
+<c:if test="${param.code ne null}">
+	<p class="errormsg"><spring:message code="${param.code}" /></p>
 </c:if>
 <div>
 	[<a href="/admin/store/create.do">New Store</a>]
@@ -57,12 +57,14 @@
 					<td>[<a href="/admin/store/edit.do?storeId=${st.storeId}">Edit</a>]</td>
 					<td>[<a href="/admin/store/view.do?storeId=${st.storeId}">View</a>]</td>
 					<td>
-						<form action="/admin/store.do" method="POST" name="store-delete-frm-${st.storeId}" id="store-delete-frm-${st.storeId}">
-							<input type="hidden" name="storeId" value='<c:out value="${st.storeId}"/>' />
-							<input type="hidden" name="_method" value="DELETE" />
-							<sec:csrfInput/>
-						</form>
-						[<a href="#" onclick="javascript:showDeleteConfirm('store-delete-frm-${st.storeId}');">Delete</a>]
+						<c:if test="${param.deleted eq null}">
+							<form action="/admin/store.do" method="POST" name="store-delete-frm-${st.storeId}" id="store-delete-frm-${st.storeId}">
+								<input type="hidden" name="storeId" value='<c:out value="${st.storeId}"/>' />
+								<input type="hidden" name="_method" value="DELETE" />
+								<sec:csrfInput/>
+							</form>
+							[<a href="#" onclick="javascript:showDeleteConfirm('store-delete-frm-${st.storeId}');">Delete</a>]
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>

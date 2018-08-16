@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.mipa.admin.web.constant.AppConstants;
 import com.mipa.admin.web.validator.StoreFormValidator;
@@ -68,9 +69,8 @@ public class StoreController {
 		}
 		LOG.debug("Request received for Create Store " + dataModel.getStoreName());
 		AuthUserModel authUserModel = (AuthUserModel) authentication.getPrincipal();
-		storeDataService.createStore(dataModel, authUserModel);
-		model.addAttribute(AppConstants.UI_MESSAGE_TAG, "store.created.successfully");
-		return viewStoreList(false, model);
+		storeDataService.createStore(dataModel, authUserModel);		
+		return "store-created";
 	}
 	
 	@RequestMapping(path="/store/edit", method=RequestMethod.GET)
@@ -92,19 +92,17 @@ public class StoreController {
 		LOG.debug("Store Update Method called " + dataModel.getStoreId());
 		AuthUserModel authUserModel = (AuthUserModel) authentication.getPrincipal();
 		storeDataService.updateStore(dataModel, authUserModel);
-		model.addAttribute(AppConstants.UI_MESSAGE_TAG, "store.updated.successfully");
-		return viewStoreList(false, model);
+		return "store-updated";
 	}
 	
 	@RequestMapping(path="/store", method=RequestMethod.DELETE)
-	public String deleteStore(@RequestParam("storeId") Integer storeId, Model model) {
+	public RedirectView deleteStore(@RequestParam("storeId") Integer storeId, Model model) {
 		LOG.debug("Store delete called. ID: " + storeId);
 		String keyCode = "store.deleted.successfully";
-		if(!storeDataService.deleteStore(storeId)){
+		if(!storeDataService.deleteStore(storeId)) {
 			keyCode = "error.store.cannot.deleted";
 		}
-		model.addAttribute(AppConstants.UI_MESSAGE_TAG, keyCode);
-		return viewStoreList(false, model);
+		return new RedirectView("/admin/store.do?code="+keyCode, true);
 	}
 
 }

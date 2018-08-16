@@ -13,7 +13,7 @@
     <sec:http use-expressions="true" authentication-manager-ref="authenticationManager" 
     		auto-config="true">
     	<sec:intercept-url pattern="/admin/**" 
-    		access="hasAnyRole('ROLE_SUPERADMIN')" requires-channel="any" />
+    		access="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')" requires-channel="any" />
     	<sec:form-login login-page="${admin.login.page.url}"
     		username-parameter="j_username" password-parameter="j_password" 
     		authentication-success-handler-ref="adminAuthenticationHandler" 

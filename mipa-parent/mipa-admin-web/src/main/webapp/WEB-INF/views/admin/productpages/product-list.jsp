@@ -6,8 +6,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <h3>Product Management</h3>
-<c:if test="${messageTag ne null}">
-	<p class="errormsg"><spring:message code="${messageTag}" /></p>
+<c:if test="${param.code ne null}">
+	<p class="errormsg"><spring:message code="${param.code}" /></p>
 </c:if>
 <div>
 	[<a href="/admin/product/create.do">New Product</a>]
@@ -55,12 +55,14 @@
 					<td>[<a href="/admin/product/edit.do?productId=${prd.productId}">Edit</a>]</td>
 					<td>[<a href="/admin/product/view.do?productId=${prd.productId}">View</a>]</td>
 					<td>
-						<form action="/admin/product.do" method="POST" name="product-delete-frm-${prd.productId}" id="product-delete-frm-${prd.productId}">
-							<input type="hidden" name="productId" value='<c:out value="${prd.productId}"/>' />
-							<input type="hidden" name="_method" value="DELETE" />
-							<sec:csrfInput/>
-						</form>
-						[<a href="#" onclick="javascript:showDeleteConfirm('product-delete-frm-${prd.productId}');">Delete</a>]
+						<c:if test="${param.deleted eq null}">
+							<form action="/admin/product.do" method="POST" name="product-delete-frm-${prd.productId}" id="product-delete-frm-${prd.productId}">
+								<input type="hidden" name="productId" value='<c:out value="${prd.productId}"/>' />
+								<input type="hidden" name="_method" value="DELETE" />
+								<sec:csrfInput/>
+							</form>
+							[<a href="#" onclick="javascript:showDeleteConfirm('product-delete-frm-${prd.productId}');">Delete</a>]
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>

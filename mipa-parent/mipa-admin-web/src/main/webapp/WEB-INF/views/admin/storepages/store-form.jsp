@@ -74,12 +74,9 @@
 	<td><form:checkbox path="active" /></td>
 </tr>
 <tr>
-	<td>Deleted</td>
-	<td><form:checkbox path="deleted"/></td>
-</tr>
-<tr>
 	<td></td>
 	<td><button type="submit" value="Submit">Submit</button></td>
 </tr>
 </table>
+<form:hidden path="deleted"/>
 </form:form>

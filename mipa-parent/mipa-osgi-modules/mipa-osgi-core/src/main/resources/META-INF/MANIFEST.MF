@@ -1,0 +1,9 @@
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.mipa.osgi
+Bundle-Version: 1.0.0
+Bundle-Name: Mipa OSGI Services
+Import-package: org.osgi.framework, org.osgi.util.tracker, org.osgi.service.http, javax.servlet, javax.servlet.http
+Bundle-Activator: com.mipa.osgi.core.registrar.CoreBundleActivator
+Export-package: com.mipa.osgi.core;version="1.0.0"
+
+

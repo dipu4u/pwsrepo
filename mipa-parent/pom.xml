@@ -34,6 +34,7 @@
 	<modules>
 		<module>mipa-core-modules</module>
 		<module>mipa-admin-web</module>
+    <module>mipa-osgi-modules</module>
   </modules>
 
 </project>

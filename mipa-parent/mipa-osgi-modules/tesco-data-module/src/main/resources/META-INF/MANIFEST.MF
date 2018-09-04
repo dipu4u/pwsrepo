@@ -1,0 +1,8 @@
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.mipa.osgi.data.tesco
+Bundle-Version: 1.0.0
+Bundle-Name: Mipa TESCO OSGI Services
+Import-package: org.osgi.framework, org.osgi.util.tracker, com.mipa.osgi.core;version="1.0.0", com.mipa.osgi.core.service;version="1.0.0", org.apache.log4j;version="1.2.17"
+Bundle-Activator: com.mipa.osgi.data.tesco.registrar.TescoBundleActivator
+
+

@@ -2,10 +2,8 @@ package com.mipa.osgi.core;
 
 public interface DataCollectorService {
 
-	long nextRunTime();
-	
-	long lastRunTime();
-	
 	String getName();
+	
+	void trigger(final String name, final Short countryId, final String pincodes);
 	
 }

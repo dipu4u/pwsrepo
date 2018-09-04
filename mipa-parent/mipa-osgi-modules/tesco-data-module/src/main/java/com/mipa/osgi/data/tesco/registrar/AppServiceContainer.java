@@ -1,4 +1,4 @@
-package org.tesco.data.tesco.registrar;
+package com.mipa.osgi.data.tesco.registrar;
 
 import com.mipa.osgi.core.service.ProviderDataActivityService;
 import com.mipa.osgi.core.service.ProviderDataService;

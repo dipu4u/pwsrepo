@@ -30,6 +30,6 @@
 		<module>user-data-module</module>
 		<module>store-data-module</module>
     	<module>product-module</module>
-    <module>audit-service</module>
+	    <module>audit-service</module>
   </modules>
 </project>

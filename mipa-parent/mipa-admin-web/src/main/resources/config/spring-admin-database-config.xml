@@ -30,6 +30,7 @@
 			<list>
 				<value>com.mipa.core.store.entity</value>
 				<value>com.mipa.core.product.entity</value>
+				<value>com.mipa.core.schedular.entity</value>
 			</list>
 		</property>
 		<property name="jpaProperties">

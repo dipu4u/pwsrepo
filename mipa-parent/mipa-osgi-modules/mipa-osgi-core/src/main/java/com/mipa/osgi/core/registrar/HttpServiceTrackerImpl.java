@@ -8,7 +8,7 @@ import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
 import org.osgi.util.tracker.ServiceTracker;
 
-import com.mipa.osgi.core.servlet.OsgiStatisticServlet;
+import com.mipa.osgi.core.servlet.CoreSchdulerServlet;
 
 public class HttpServiceTrackerImpl extends ServiceTracker<BundleContext, HttpService> {
 	
@@ -23,7 +23,7 @@ public class HttpServiceTrackerImpl extends ServiceTracker<BundleContext, HttpSe
 	public HttpService addingService(ServiceReference<BundleContext> reference) {
 		HttpService httpService = (HttpService) context.getService(reference);
 		try {
-			httpService.registerServlet("/core/statistic", new OsgiStatisticServlet(), null, null);
+			httpService.registerServlet("/core/statistic", new CoreSchdulerServlet(), null, null);
 		} catch (ServletException | NamespaceException e) {
 			e.printStackTrace();
 		}

@@ -8,10 +8,11 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
-import com.mipa.osgi.core.DataCollectorService;
+import com.mipa.osgi.core.service.DataCollectorService;
 import com.mipa.osgi.core.service.ProviderDataActivityService;
 import com.mipa.osgi.core.service.ProviderDataService;
-import com.mipa.osgi.data.tesco.service.TescoDataCollectorService;
+import com.mipa.osgi.data.constant.TescoBundleConstant;
+import com.mipa.osgi.data.service.TescoDataCollectorServiceImpl;
 
 public class TescoBundleActivator implements BundleActivator {
 	
@@ -28,8 +29,8 @@ public class TescoBundleActivator implements BundleActivator {
 		System.out.println("Now register Tesco Data Collector Service");
 		bundleContext = context;
 		Hashtable<String, String> props = new Hashtable<String, String>(1);
-		props.put("type", "TESCO");
-		dataCollectorService = context.registerService(DataCollectorService.class, new TescoDataCollectorService(), props);
+		props.put("type", TescoBundleConstant.NAME);
+		dataCollectorService = context.registerService(DataCollectorService.class, new TescoDataCollectorServiceImpl(), props);
 		System.out.println("Tesco Data Collector service registered");
 		findService();
 	}

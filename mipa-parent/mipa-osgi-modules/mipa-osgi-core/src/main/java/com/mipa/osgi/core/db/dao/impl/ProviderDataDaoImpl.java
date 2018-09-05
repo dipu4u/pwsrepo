@@ -1,12 +1,29 @@
 package com.mipa.osgi.core.db.dao.impl;
 
+import javax.sql.DataSource;
+
 import com.mipa.osgi.core.db.dao.ProviderDataDao;
 import com.mipa.osgi.core.db.entity.ProviderDataEntity;
 
-public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderDataEntity> implements ProviderDataDao {
+public class ProviderDataDaoImpl implements ProviderDataDao {
 
-	public ProviderDataDaoImpl() {
-		super(ProviderDataEntity.class);
-	}
+	private DataSource dataSource;
 	
+	public ProviderDataDaoImpl() {
+	}
+
+	@Override
+	public ProviderDataEntity getObjectById(Integer providerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public DataSource getDataSource() {
+		return dataSource;
+	}
+
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
 }

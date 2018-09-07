@@ -6,8 +6,8 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
 import com.mipa.osgi.core.ScheduledJob;
+import com.mipa.osgi.core.container.BundleServiceContainer;
 import com.mipa.osgi.core.db.entity.ProviderDataEntity;
-import com.mipa.osgi.core.registrar.BundleServiceContainer;
 import com.mipa.osgi.core.schedular.CoreSchedularProvider;
 import com.mipa.osgi.core.service.DataCollectorService;
 

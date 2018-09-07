@@ -3,11 +3,9 @@ Bundle-SymbolicName: com.mipa.osgi
 Bundle-Version: 1.0.0
 Bundle-Name: Mipa OSGI Services
 Import-package: org.osgi.framework, org.osgi.util.tracker, org.osgi.service.http, javax.servlet, javax.servlet.http, org.apache.log4j;version="1.2.17",
- javax.persistence;version="[1.0.0,2.1.0]", org.hibernate.jpa, org.hibernate.proxy
+ javax.sql, org.apache.commons.dbutils, org.apache.commons.dbutils.handlers, org.apache.derby.jdbc
 Bundle-Activator: com.mipa.osgi.core.registrar.CoreBundleActivator
 Export-package: com.mipa.osgi.core;version="1.0.0", com.mipa.osgi.core.service;version="1.0.0"
-Bundle-Classpath: ., common-data-module-1.0.0-SNAPSHOT.jar
-Meta-Persistence: META-INF/persistence.xml
 
 
 

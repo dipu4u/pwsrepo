@@ -7,6 +7,8 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.HttpService;
 import org.osgi.util.tracker.ServiceTracker;
 
+import com.mipa.osgi.core.container.BundleServiceContainer;
+import com.mipa.osgi.core.container.DatabaseComponentContainer;
 import com.mipa.osgi.core.schedular.CoreSchedularProvider;
 import com.mipa.osgi.core.service.ProviderDataActivityService;
 import com.mipa.osgi.core.service.ProviderDataService;
@@ -21,31 +23,36 @@ public class CoreBundleActivator implements BundleActivator {
 	private ServiceRegistration<ProviderDataService> providerServiceRef = null;
 	private ServiceRegistration<ProviderDataActivityService> providerActivityServiceRef = null;
 	
-	private final BundleServiceContainer serviceContainer;
-	
-	public CoreBundleActivator() {
-		serviceContainer = BundleServiceContainer.getInstance();
-	}
+	private DatabaseComponentContainer dbContainer = null;
+	private BundleServiceContainer serviceContainer = null;
+	private CoreSchedularProvider schedulerProvider = null;
 	
 	@Override
 	public void start(BundleContext context) throws Exception {
 		System.out.println("Start Core Bundle.");
-		this.context = context;
-		registerService();
-		httpServiceTracker = new HttpServiceTrackerImpl(this.context);
-		httpServiceTracker.open();
+		this.context = context;		
 		System.out.println("Core Bundle started with Http Service");
-		serviceContainer.setBundleContext(context);
-		CoreSchedularProvider.getInstance();
+		dbContainer = DatabaseComponentContainer.getInstance();
+		if(dbContainer.init()) {
+			httpServiceTracker = new HttpServiceTrackerImpl(this.context);
+			httpServiceTracker.open();
+			
+			serviceContainer = BundleServiceContainer.getInstance();
+			serviceContainer.setBundleContext(context);
+			schedulerProvider = CoreSchedularProvider.getInstance();
+			registerService();
+		} else {
+			throw new RuntimeException("Core Bundle. Database not reachable aborted service startup.");
+		}
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		System.out.println("Shutdown Core Bundle Servlet Services");
 		providerServiceRef.unregister();
-		CoreSchedularProvider.getInstance().shutdown();
 		providerActivityServiceRef.unregister();
 		httpServiceTracker.close();
+		schedulerProvider.shutdown();
 		System.out.println("All Core Bundle services are down");
 	}
 
@@ -56,5 +63,5 @@ public class CoreBundleActivator implements BundleActivator {
 				serviceContainer.getProviderDataActivityService(), null);
 		System.out.println("Core Provider Service registration complete.");
 	}
-
+	
 }

@@ -1,29 +1,32 @@
 package com.mipa.osgi.core.db.dao.impl;
 
-import javax.sql.DataSource;
+import java.sql.SQLException;
+
+import org.apache.commons.dbutils.QueryRunner;
 
 import com.mipa.osgi.core.db.dao.ProviderDataActivityDao;
 import com.mipa.osgi.core.db.entity.ProviderDataActivityEntity;
 
-public class ProviderDataActivityDaoImpl implements ProviderDataActivityDao {
-
-	private DataSource dataSource;
+public class ProviderDataActivityDaoImpl extends AbstractDaoImpl<ProviderDataActivityEntity> 
+		implements ProviderDataActivityDao {
 	
-	public ProviderDataActivityDaoImpl() {
-	}
+	private static final String TABLE_NAME = "providerdataactivitymaster";
+
+	public ProviderDataActivityDaoImpl() {}
 
 	@Override
 	public boolean save(ProviderDataActivityEntity entity) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean inserted = false;
+		QueryRunner runner = new QueryRunner(getDataSource());		
+		try {
+			int status = runner.update("insert into " + TABLE_NAME + " (providerId, runDateTime, jobStatus) "
+					+ "values (next value for providerdataactivitymaster_seq,?,?)", 
+					entity.getProviderId(), entity.getRunDateTime(), entity.getJobStatus().name());
+			inserted = status > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return inserted;
 	}
-
-	public DataSource getDataSource() {
-		return dataSource;
-	}
-
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-
+	
 }

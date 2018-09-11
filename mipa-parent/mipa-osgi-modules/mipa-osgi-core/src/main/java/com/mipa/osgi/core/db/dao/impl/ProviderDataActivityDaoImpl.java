@@ -1,6 +1,7 @@
 package com.mipa.osgi.core.db.dao.impl;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import org.apache.commons.dbutils.QueryRunner;
 
@@ -17,11 +18,12 @@ public class ProviderDataActivityDaoImpl extends AbstractDaoImpl<ProviderDataAct
 	@Override
 	public boolean save(ProviderDataActivityEntity entity) {
 		boolean inserted = false;
-		QueryRunner runner = new QueryRunner(getDataSource());		
+		QueryRunner runner = new QueryRunner(getDataSource());
 		try {
-			int status = runner.update("insert into " + TABLE_NAME + " (providerId, runDateTime, jobStatus) "
-					+ "values (next value for providerdataactivitymaster_seq,?,?)", 
-					entity.getProviderId(), entity.getRunDateTime(), entity.getJobStatus().name());
+			int status = runner.update("insert into " + TABLE_NAME + 
+				" (serialId, providerId, runDateTime, jobStatus) "
+				+ "values (next value for providerdataactivitymaster_seq,?,?,?)", entity.getProviderId(),
+				new Timestamp(entity.getRunDateTime().toEpochSecond()*1000), entity.getJobStatus().name());
 			inserted = status > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();

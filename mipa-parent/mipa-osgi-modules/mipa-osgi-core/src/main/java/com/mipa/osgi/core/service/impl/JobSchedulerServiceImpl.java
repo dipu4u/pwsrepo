@@ -1,5 +1,6 @@
 package com.mipa.osgi.core.service.impl;
 
+import java.util.Collection;
 import java.util.Objects;
 
 import org.osgi.framework.InvalidSyntaxException;
@@ -29,11 +30,18 @@ public class JobSchedulerServiceImpl {
 		ProviderDataEntity dataEntity = serviceContainer.getProviderDataService().getProvider(providerId);
 		try {
 			if(Objects.nonNull(dataEntity)) {
-				ServiceReference<DataCollectorService> serviceRef = getServiceReference(dataEntity.getProviderName());
-				DataCollectorService dataCollectorService = serviceContainer.getBundleContext().getService(serviceRef);
-				ScheduledJob job = dataCollectorService.getJob(providerId);
-				schedularProvider.addJob(job);
-				status = true;
+				final String providerName = dataEntity.getProviderName();
+				Collection<ServiceReference<DataCollectorService>> serviceRefList = 
+						getServiceReference(providerName);
+				if(!serviceRefList.isEmpty()) {
+					DataCollectorService dataCollectorService = 
+							serviceContainer.getBundleContext().getService(serviceRefList.iterator().next());
+					ScheduledJob job = dataCollectorService.getJob(providerId);
+					schedularProvider.addJob(job);
+					status = true;
+				} else {
+					System.out.println("Data Collector Service not found for " + dataEntity.getProviderName());
+				}
 			}
 		}catch(InvalidSyntaxException e) {
 			e.printStackTrace();
@@ -41,10 +49,11 @@ public class JobSchedulerServiceImpl {
 		return status;
 	}
 	
-	@SuppressWarnings({ "unused", "unchecked" })
-	private ServiceReference<DataCollectorService> getServiceReference(final String providerName) throws InvalidSyntaxException {
+	@SuppressWarnings({ "unused"})
+	private Collection<ServiceReference<DataCollectorService>> getServiceReference(final String providerName) 
+			throws InvalidSyntaxException {
 		ServiceReference<DataCollectorService> serviceRef = null;
-		return (ServiceReference<DataCollectorService>) 
-				serviceContainer.getBundleContext().getServiceReferences(DataCollectorService.class, "");
+		final String filter = "(attributes=" + providerName + ")";
+		return serviceContainer.getBundleContext().getServiceReferences(DataCollectorService.class, filter);
 	}
 }

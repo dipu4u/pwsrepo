@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<information_schema xmlns="http://www.jooq.org/xsd/jooq-meta-3.11.0.xsd">
+    <schemata>
+        <schema>
+            <schema_name>PWSAPPDB</schema_name>
+        </schema>
+    </schemata>
+
+    <tables>
+        <table>
+            <table_schema>PWSAPPDB</table_schema>
+            <table_name>providerdatamaster</table_name>
+        </table>
+        <table>
+            <table_schema>PWSAPPDB</table_schema>
+            <table_name>providerdataactivitymaster</table_name>
+        </table>
+    </tables>
+
+
+</information_schema>

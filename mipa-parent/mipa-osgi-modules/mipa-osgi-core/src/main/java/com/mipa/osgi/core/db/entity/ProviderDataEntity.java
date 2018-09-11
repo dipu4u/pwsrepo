@@ -7,7 +7,7 @@ public class ProviderDataEntity {
 	
 	private String providerName;
 	
-	private Short countryId;
+	private Integer countryId;
 	
 	private String pincodes;
 	
@@ -21,11 +21,11 @@ public class ProviderDataEntity {
 		this.providerId = providerId;
 	}
 
-	public Short getCountryId() {
+	public Integer getCountryId() {
 		return countryId;
 	}
 
-	public void setCountryId(Short countryId) {
+	public void setCountryId(Integer countryId) {
 		this.countryId = countryId;
 	}
 

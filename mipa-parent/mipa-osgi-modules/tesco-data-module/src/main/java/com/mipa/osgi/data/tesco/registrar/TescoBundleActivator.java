@@ -29,14 +29,14 @@ public class TescoBundleActivator implements BundleActivator {
 		System.out.println("Now register Tesco Data Collector Service");
 		bundleContext = context;
 		Hashtable<String, String> props = new Hashtable<String, String>(1);
-		props.put("type", TescoBundleConstant.NAME);
+		props.put("attributes", TescoBundleConstant.NAME);
 		dataCollectorService = context.registerService(DataCollectorService.class, new TescoDataCollectorServiceImpl(), props);
 		System.out.println("Tesco Data Collector service registered");
 		findService();
 	}
 
 	@Override
-	public void stop(BundleContext context) throws Exception {		
+	public void stop(BundleContext context) throws Exception {
 		dataCollectorService.unregister();
 		System.out.println("Shutdown Tesco Data Collector Service");
 	}

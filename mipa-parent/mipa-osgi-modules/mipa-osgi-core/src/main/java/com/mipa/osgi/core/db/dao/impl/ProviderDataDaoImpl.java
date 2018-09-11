@@ -19,10 +19,10 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderDataEntity>
 	@Override
 	public boolean save(ProviderDataEntity entity) {
 		boolean inserted = false;
-		QueryRunner runner = new QueryRunner(getDataSource());		
+		QueryRunner runner = new QueryRunner(getDataSource());
 		try {
-			int status = runner.update("insert into " + TABLE_NAME + " (providerName, countryId, pincodes, active) "
-					+ "values (next value for providerdatamaster_seq,?,?,?)", 
+			int status = runner.update("insert into " + TABLE_NAME + " (providerId, providerName, countryId, pincodes, active) "
+					+ "values (next value for providerdatamaster_seq,?,?,?,?)", 
 					entity.getProviderName(), entity.getCountryId(), entity.getPincodes(), entity.getActive());
 			inserted = status > 0;
 		} catch (SQLException e) {
@@ -38,7 +38,8 @@ public class ProviderDataDaoImpl extends AbstractDaoImpl<ProviderDataEntity>
 				new BeanHandler<ProviderDataEntity>(ProviderDataEntity.class);
 		QueryRunner runner = new QueryRunner(getDataSource());
 		try {
-			entity = runner.query("select * from " + TABLE_NAME + " where providerId=?", resultHandler, providerId);
+			entity = runner.query("select providerId, providerName, countryId, pincodes from " 
+					+ TABLE_NAME + " where providerId=?", resultHandler, providerId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
